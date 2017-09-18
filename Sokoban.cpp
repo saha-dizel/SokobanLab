@@ -55,6 +55,52 @@ public:
 	{
 
 	}
+	
+	class tile
+	{
+		private:
+		bool box;
+		bool playerPos;
+		bool wall;
+		bool winPlace;
+		
+		public:
+		//геттеры
+		bool getBox()
+		{
+			return box;
+		}
+		bool getPlayerPos()
+		{
+			return playerPos;
+		}
+		bool getWall()
+		{
+			return wall;
+		}
+		bool getWinPlace()
+		{
+			return winPlace;
+		}
+		
+		//сеттеры
+		void setBox(bool boxState)
+		{
+			box = boxState;
+		}
+		void setPlayerPos(bool playerPosState)
+		{
+			playerPos = playerPosState
+		}
+		void setWall(bool wallState)
+		{
+			wall = wallState;
+		}
+		void setWinPlace(bool winPlaceState)
+		{
+			winPlace = winPlaceState;
+		}
+	};
 };
 
 void main()
