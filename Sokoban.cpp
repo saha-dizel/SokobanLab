@@ -65,6 +65,15 @@ public:
 		bool winPlace;
 		
 		public:
+		//конструктор
+		tile ()
+		{
+			box = false;
+			playerPos = false;
+			wall = false;
+			winPlace = false;
+		}
+		
 		//геттеры
 		bool getBox()
 		{
