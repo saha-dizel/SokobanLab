@@ -68,10 +68,17 @@ public:
 		//конструктор
 		tile ()
 		{
+			/*
 			box = false;
 			playerPos = false;
 			wall = false;
 			winPlace = false;
+			*/
+			
+			//НАДО ПОЛУЧИТЬ НАЗВАНИЕ УРОВНЯ
+			//А ДЛЯ ЭТОГО СДЕЛАТЬ ОТДЕЛЬНЫЙ ПРИВАТНЫЙ МЕТОД
+			ifstream fin (lvlName);
+			lvlGen();
 		}
 		
 		//геттеры
@@ -108,6 +115,45 @@ public:
 		void setWinPlace(bool winPlaceState)
 		{
 			winPlace = winPlaceState;
+		}
+		
+		void lvlGen()
+		{
+			//НАДО ПОЛУЧИТЬ НАЗВАНИЕ УРОВНЯ
+			//А ДЛЯ ЭТОГО СДЕЛАТЬ ОТДЕЛЬНЫЙ ПРИВАТНЫЙ МЕТОД
+			ifstream fin (lvlName);
+			
+			//в начало уровней надо поместить кол-во строк/столбцов
+			fin >> rows >> columns;
+			
+			for (int i = 0; i < rows ; i++)
+				for (int j = 0; j < columns; j++)
+				{
+					//считываем один символ
+					tileSpec = getline (fin, 1);
+					
+					switch (tilespec)
+					{
+					case '#':
+						{
+							array[i,j].setWall(true);
+						}
+					case '@':
+						{
+							array[i,j].setBox(true);
+						}
+					case '+':
+						{
+							array[i,j].setPlayerPos(true);
+						}
+					case '$':
+						{
+							array[i,j].setWinPlace(true);
+						}
+					}
+				}
+			
+			//СЮДА ЖЕ ВСУНУТЬ ОТРИСОВКУ УРОВНЯ
 		}
 	};
 };
