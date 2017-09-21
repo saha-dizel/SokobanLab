@@ -12,8 +12,6 @@ class Sokoban
 private:
 	//выбранный уровень
 	unsigned short int lvl;
-	unsigned short int boxNum;
-	unsigned short int boxInPlace;
 
 public:
 	//конструктор
@@ -55,18 +53,18 @@ public:
 	{
 
 	}
-	
+
 	class tile
 	{
-		private:
+	private:
 		bool box;
 		bool playerPos;
 		bool wall;
 		bool winPlace;
-		
-		public:
+
+	public:
 		//конструктор
-		tile ()
+		tile()
 		{
 			/*
 			box = false;
@@ -74,13 +72,13 @@ public:
 			wall = false;
 			winPlace = false;
 			*/
-			
+
 			//НАДО ПОЛУЧИТЬ НАЗВАНИЕ УРОВНЯ
 			//А ДЛЯ ЭТОГО СДЕЛАТЬ ОТДЕЛЬНЫЙ ПРИВАТНЫЙ МЕТОД
-			ifstream fin (lvlName);
+			ifstream fin(lvlName);
 			lvlGen();
 		}
-		
+
 		//геттеры
 		bool getBox()
 		{
@@ -98,7 +96,7 @@ public:
 		{
 			return winPlace;
 		}
-		
+
 		//сеттеры
 		void setBox(bool boxState)
 		{
@@ -116,43 +114,45 @@ public:
 		{
 			winPlace = winPlaceState;
 		}
-		
+
 		void lvlGen()
 		{
 			//НАДО ПОЛУЧИТЬ НАЗВАНИЕ УРОВНЯ
 			//А ДЛЯ ЭТОГО СДЕЛАТЬ ОТДЕЛЬНЫЙ ПРИВАТНЫЙ МЕТОД
-			ifstream fin (lvlName);
-			
+			string lvlName = getLVL() + ".txt";
+			ifstream fin(lvlName);
+
 			//в начало уровней надо поместить кол-во строк/столбцов
 			fin >> rows >> columns;
-			
-			for (int i = 0; i < rows ; i++)
+
+			for (int i = 0; i < rows; i++)
 				for (int j = 0; j < columns; j++)
 				{
 					//считываем один символ
-					tileSpec = getline (fin, 1);
-					
+					tileSpec = getline(fin, 1);
+
 					switch (tilespec)
 					{
 					case '#':
-						{
-							array[i,j].setWall(true);
-						}
+					{
+						array[i, j].setWall(true);
+					}
 					case '@':
-						{
-							array[i,j].setBox(true);
-						}
+					{
+						array[i, j].setBox(true);
+					}
 					case '+':
-						{
-							array[i,j].setPlayerPos(true);
-						}
+					{
+						array[i, j].setPlayerPos(true);
+					}
 					case '$':
-						{
-							array[i,j].setWinPlace(true);
-						}
+					{
+						array[i, j].setWinPlace(true);
+					}
 					}
 				}
-			
+
+			fin.close();
 			//СЮДА ЖЕ ВСУНУТЬ ОТРИСОВКУ УРОВНЯ
 		}
 	};
@@ -172,28 +172,28 @@ void main()
 //Итак, что нам нужно
 /*
 данные:
-	-счётчик уровней: lvl
-	-количестов ящиков на уровне: boxNum
-	-количество установленных на нужное место ящиков: boxInPlace
+-счётчик уровней: lvl
+-количестов ящиков на уровне: boxNum
+-количество установленных на нужное место ящиков: boxInPlace
 
 методы:
-	конструктор: Sokoban (тут надо реализовать запуск меню, меню - отдельный подкласс)
-	+выбор уровня: setLVL
-	+меню: menu
-	+получение уровня: getLVL (для последующего счётчика уровней)
-	+смена уровня: changeLVL
-	+кол-во коробок на уровне: setBox
+конструктор: Sokoban (тут надо реализовать запуск меню, меню - отдельный подкласс)
++выбор уровня: setLVL
++меню: menu
++получение уровня: getLVL (для последующего счётчика уровней)
++смена уровня: changeLVL
++кол-во коробок на уровне: setBox
 */
 
 /*
 Итак, появляется новый класс: tile
 данные:
-	-наличие коробки: box
-	-позиция игрока: playerPos
-	-наличие стены: wall
-	-место для коробки: winPlace
+-наличие коробки: box
+-позиция игрока: playerPos
+-наличие стены: wall
+-место для коробки: winPlace
 методы:
-	+4 геттера
-	+4 сеттера 
-	//это для каждых данных
++4 геттера
++4 сеттера
+//это для каждых данных
 */
