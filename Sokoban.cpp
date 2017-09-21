@@ -127,7 +127,7 @@ public:
 			fin >> rows >> columns;
 			
 			for (int i = 0; i < rows ; i++)
-				for (int j = 0; j < columns; j++)
+				for (int j = 0; j < columns + 1; j++)
 				{
 					//считываем один символ
 					tileSpec = getline (fin, 1);
