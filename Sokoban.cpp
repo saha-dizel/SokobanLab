@@ -158,11 +158,6 @@ public:
 	};
 };
 
-void main()
-{
-
-}
-
 /*
 Легенда:
 + тип public
