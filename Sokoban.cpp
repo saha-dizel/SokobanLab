@@ -156,6 +156,39 @@ public:
 			//СЮДА ЖЕ ВСУНУТЬ ОТРИСОВКУ УРОВНЯ
 		}
 	};
+	
+	class player
+	{
+	private:
+	int PlayerCoordinateX, PlayerCoordinateY;//Координаты, где стоит игрок
+	bool CanMovePlayer(int MoveInX, int MoveInY)/*Метод, который проверяет, может ли игрок двигаться влево или вправо,
+							  MoveInX и MoveInY - смещение от координат героя, ожидаемый диапазон значений от -1 до +1*/
+	{
+		if (tile[PlayerCoordinateX + MoveInX][PlayerCoordinateY + MoveInY].getWall != true)//Если там не стена
+		{
+			if (tile[PlayerCoordinateX + MoveInX][PlayerCoordinateY + MoveInY].getBox == true &&
+				(title[CoordinateX + 2 * MoveInX][CoordinateY + 2 * MoveInY].getBox != true) or (title[CoordinateX + 2 * MoveInX][CoordinateY + 2 * MoveInY].getWall != true))//Если там не две коробки или коробка+стена
+				return true; //можно
+			else return false;//иначе нельзя
+		}
+		else return false; //инача нельзя
+	};
+
+	public:
+	void MovePlayer(int MoveInX, int MoveInY)/*Метод, который двигает игрка влево или вправо,
+							  MoveInX и MoveInY - смещение от координат героя, ожидаемый диапазон значений от -1 до +1*/
+	{
+		if (player.CanMovePlayer(MoveInX , MoveInY) == true)
+		{
+			tile[PlayerCoordinateX + MoveInX][PlayerCoordinateY + MoveInY].setBox(false);//убрать коробку
+			tile[PlayerCoordinateX + 2 * MoveInX][PlayerCoordinateY + 2 * MoveInY].setBox(true);//поставить коробку
+			tile[PlayerCoordinateX][PlayerCoordinateY].setPlayerPos(false);//Убрать игрока с клетки
+			tile[PlayerCoordinateX + MoveInX][PlayerCoordinateY + MoveInY].setPlayerPos(true);//Поставить игрока на новую клетку
+			PlayerCoordinateX = PlayerCoordinateX + MoveInX;//Записать новые координаты игрока
+			PlayerCoordinateY = PlayerCoordinateY + MoveInY;
+		}/*Сама коробка двигаться не может, поэтому нет нужны в написании метода её отдельного движения*/
+	};
+	};
 };
 
 void main()
