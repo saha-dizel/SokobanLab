@@ -175,7 +175,7 @@ public:
 		};
 
 	public:
-		void MovePlayer(int MoveInX, int MoveInY)/*Метод, который двигает игрка влево или вправо,
+		void MovePlayer(int MoveInX, int MoveInY)/*Метод, который двигает игрока по плоскости, сдвигает коробки,
 								  MoveInX и MoveInY - смещение от координат героя, ожидаемый диапазон значений от -1 до +1*/
 		{
 			if (player.CanMovePlayer(MoveInX, MoveInY) == true)
