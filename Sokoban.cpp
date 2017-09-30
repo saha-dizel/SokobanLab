@@ -119,14 +119,17 @@ public:
 		{
 			//НАДО ПОЛУЧИТЬ НАЗВАНИЕ УРОВНЯ
 			//А ДЛЯ ЭТОГО СДЕЛАТЬ ОТДЕЛЬНЫЙ ПРИВАТНЫЙ МЕТОД
+
 			string lvlName = getLVL() + ".txt";
+
 			ifstream fin(lvlName);
 
 			//в начало уровней надо поместить кол-во строк/столбцов
 			fin >> rows >> columns;
 
 			for (int i = 0; i < rows; i++)
-				for (int j = 0; j < columns; j++)
+				for (int j = 0; j < columns + 1; j++)
+
 				{
 					//считываем один символ
 					tileSpec = getline(fin, 1);
@@ -152,9 +155,47 @@ public:
 					}
 				}
 
+
 			fin.close();
+
 			//СЮДА ЖЕ ВСУНУТЬ ОТРИСОВКУ УРОВНЯ
 		}
+	};
+
+	class player
+	{
+	private:
+		int PlayerCoordinateX, PlayerCoordinateY;//Координаты, где стоит игрок
+		bool CanMovePlayer(int MoveInX, int MoveInY)/*Метод, который проверяет, может ли игрок двигаться влево или вправо,
+								  MoveInX и MoveInY - смещение от координат героя, ожидаемый диапазон значений от -1 до +1*/
+		{
+			if (tile[PlayerCoordinateX + MoveInX][PlayerCoordinateY + MoveInY].getWall != true)//Если там не стена
+			{
+				if (tile[PlayerCoordinateX + MoveInX][PlayerCoordinateY + MoveInY].getBox == true &&
+					(title[CoordinateX + 2 * MoveInX][CoordinateY + 2 * MoveInY].getBox != true) or (title[CoordinateX + 2 * MoveInX][CoordinateY + 2 * MoveInY].getWall != true))//Если там не две коробки или коробка+стена
+					return true; //можно
+				else return false;//иначе нельзя
+			}
+			else return false; //инача нельзя
+		};
+
+	public:
+		void MovePlayer(int MoveInX, int MoveInY)/*Метод, который двигает игрока по плоскости, сдвигает коробки,
+								  MoveInX и MoveInY - смещение от координат героя, ожидаемый диапазон значений от -1 до +1*/
+		{
+			if (player.CanMovePlayer(MoveInX, MoveInY) == true)
+			{
+				if (tile[PlayerCoordinateX + MoveInX][PlayerCoordinateY + MoveInY].getBox() == true)
+				{
+					tile[PlayerCoordinateX + MoveInX][PlayerCoordinateY + MoveInY].setBox(false);//убрать коробку
+					tile[PlayerCoordinateX + 2 * MoveInX][PlayerCoordinateY + 2 * MoveInY].setBox(true);//поставить коробку
+				}
+				tile[PlayerCoordinateX][PlayerCoordinateY].setPlayerPos(false);//Убрать игрока с клетки
+				tile[PlayerCoordinateX + MoveInX][PlayerCoordinateY + MoveInY].setPlayerPos(true);//Поставить игрока на новую клетку
+				PlayerCoordinateX = PlayerCoordinateX + MoveInX;//Записать новые координаты игрока
+				PlayerCoordinateY = PlayerCoordinateY + MoveInY;
+			}/*Сама коробка двигаться не может, поэтому нет нужны в написании метода её отдельного движения*/
+		};
 	};
 };
 
@@ -188,7 +229,9 @@ public:
 -наличие стены: wall
 -место для коробки: winPlace
 методы:
+
 +4 геттера
 +4 сеттера
 //это для каждых данных
+
 */
