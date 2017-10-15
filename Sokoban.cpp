@@ -2,6 +2,7 @@
 #include <windows.h>
 #include <conio.h>
 #include <iostream>
+#include <cstdlib>
 
 //устанавливаем пространство имён
 using namespace std;
@@ -126,6 +127,10 @@ public:
 
 			//в начало уровней надо поместить кол-во строк/столбцов
 			fin >> rows >> columns;
+			tile **array;
+			array = new tile *[rows];/*Создание двумерного массива, где будут наши клетки*/
+			for (int i = 0; i < rows; i++)
+				array[i] = new tile[columns];
 
 			for (int i = 0; i < rows; i++)
 				for (int j = 0; j < columns + 1; j++)
@@ -162,6 +167,30 @@ public:
 		}
 	};
 
+	//метод для прорисовки карты (надо всовывать его после каждого перемещения)
+	void MapDraw()
+	{
+		system("cls");
+
+		for (int i = 0; i < rows; i++)
+			for (int j = 0; j < columns; j++)
+			{
+				if (array[i, j].getWall() == true)
+					cout << '#';
+
+				if (array[i, j].getBox() == true)
+					cout << '@';
+				else if (array[i, j].getPlayerPos == true)
+					cout << '+';
+				else if (array[i, j].getWinPlace == true)
+					cout << '$';
+
+				if (j == columns)
+					cout << endl;
+			}
+	}
+
+
 	class player
 	{
 	private:
@@ -194,6 +223,7 @@ public:
 				tile[PlayerCoordinateX + MoveInX][PlayerCoordinateY + MoveInY].setPlayerPos(true);//Поставить игрока на новую клетку
 				PlayerCoordinateX = PlayerCoordinateX + MoveInX;//Записать новые координаты игрока
 				PlayerCoordinateY = PlayerCoordinateY + MoveInY;
+				MapDraw();/*Добавлена прорисовка карты после каждого действия*/
 			}/*Сама коробка двигаться не может, поэтому нет нужны в написании метода её отдельного движения*/
 		};
 	};
